@@ -51,17 +51,102 @@ You are a Java Spring WebFlux expert specializing in fully reactive, non-blockin
 - [ ] Service returning `Mono<T>` / `Flux<T>` with proper error handling
 - [ ] Controller returning `Mono<T>` / `Flux<T>` with `@Tag`, `@Operation`, `@ApiResponse`
 - [ ] Exception handling via `@RestControllerAdvice` returning `Mono<ErrorResponse>`
-- [ ] Unit tests using `StepVerifier`
-- [ ] Integration tests using `WebTestClient`
+- [ ] **Unit tests for service** using `StepVerifier` (MANDATORY)
+- [ ] **Integration tests for controller** using `WebTestClient` (MANDATORY)
 
 ## Work Process
 
 1. Invoke `spring-patterns` skill for reference
 2. Read existing entities/services for patterns
 3. Implement: entity → repository → service → controller (all reactive)
-4. Run `mvn compile` to verify
-5. Run `mvn test` — verify all `StepVerifier` tests pass
-6. Never use blocking APIs — check for `.block()`, `RestTemplate`, JPA imports
+4. **Create unit tests for the service** (use `testing-patterns` skill)
+5. **Create integration tests for the controller**
+6. Run `mvn compile` to verify
+7. Run `mvn test` — verify ALL tests pass
+8. Never use blocking APIs — check for `.block()`, `RestTemplate`, JPA imports
+
+## Testing Requirements (Non-Negotiable)
+
+**Every feature implementation MUST include tests. No exceptions.**
+
+### Service Unit Tests
+```java
+@ExtendWith(MockitoExtension.class)
+class MyServiceTest {
+    @Mock private MyRepository repository;
+    @InjectMocks private MyService service;
+
+    @Test
+    void shouldDoSomething() {
+        StepVerifier.create(service.doSomething())
+            .assertNext(result -> assertThat(result).isNotNull())
+            .verifyComplete();
+    }
+}
+```
+
+### Controller Integration Tests
+```java
+@WebFluxTest(MyController.class)
+class MyControllerTest {
+    @Autowired private WebTestClient webClient;
+    @MockBean private MyService service;
+
+    @Test
+    void shouldReturnData() {
+        when(service.getData()).thenReturn(Mono.just(data));
+
+        webClient.get().uri("/api/data")
+            .exchange()
+            .expectStatus().isOk()
+            .expectBody().jsonPath("$.field").isEqualTo("value");
+    }
+}
+```
+
+### If Using JPA (Legacy/Migration)
+```java
+@ExtendWith(MockitoExtension.class)
+class MyServiceTest {
+    @Mock private MyRepository repository;
+    @InjectMocks private MyService service;
+
+    @Test
+    void shouldDoSomething() {
+        when(repository.findById(any())).thenReturn(Optional.of(entity));
+
+        MyDto result = service.getById(id);
+
+        assertThat(result.getName()).isEqualTo("expected");
+    }
+}
+```
+
+### Controller Tests (JPA/MVC)
+```java
+@WebMvcTest(MyController.class)
+class MyControllerTest {
+    @Autowired private MockMvc mockMvc;
+    @MockBean private MyService service;
+
+    @Test
+    void shouldReturnData() throws Exception {
+        when(service.getData()).thenReturn(data);
+
+        mockMvc.perform(get("/api/data"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.field", is("value")));
+    }
+}
+```
+
+## Completion Criteria
+
+A feature is NOT complete until:
+1. All code compiles: `mvn compile`
+2. All tests pass: `mvn test`
+3. Service has ≥80% test coverage
+4. All controller endpoints have tests
 
 ## Anti-Patterns to Avoid
 

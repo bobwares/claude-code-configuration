@@ -102,12 +102,44 @@ All Spring Boot applications use **Spring WebFlux** with **R2DBC** for fully non
 
 ## Testing
 
+### General Principles
 - Factory pattern for test data: `getMock[Entity](overrides?: Partial<Entity>)`
 - Test behavior, not implementation details
-- Unit tests co-located with source files (`*.test.ts`)
-- E2E tests in `e2e/` directory using Playwright
 - Minimum 80% line coverage on all service classes
 - Write the failing test BEFORE implementing the fix (TDD)
+
+### TypeScript Testing
+- Unit tests co-located with source files (`*.test.ts` or `*.spec.ts`)
+- E2E tests in `e2e/` directory using Playwright
+- Use Vitest with `describe` → `it` → arrange/act/assert pattern
+- Mock external dependencies with `vi.mock()`
+
+### Java Testing (Mandatory)
+- **Every Java service class MUST have a corresponding test class**
+- **Every Java controller MUST have integration tests**
+- Unit tests in `src/test/java/...` mirroring source structure
+- Use JUnit 5 with `@ExtendWith(MockitoExtension.class)`
+- Use `@Nested` classes to group tests by method
+- Use `@DisplayName` for readable test names
+- Controller tests use `@WebMvcTest` with `MockMvc`
+- Reactive tests use `StepVerifier` — never `.block()` or `Thread.sleep()`
+- E2E HTTP tests in `e2e/*.http` files (IntelliJ HTTP Client format)
+
+### Java Test Commands
+```bash
+mvn test                        # Run all tests
+mvn test -Dtest=*ServiceTest    # Run service tests
+mvn test -pl api                # Run tests in api module
+mvn verify                      # Run all tests + integration tests
+```
+
+### Test Coverage Requirements
+| Layer | Minimum Coverage |
+|-------|-----------------|
+| TypeScript Services | 80% lines |
+| TypeScript Utils | 90% lines |
+| Java Services | 80% lines |
+| Java Controllers | All endpoints |
 
 ---
 
