@@ -1,0 +1,18 @@
+{
+  "turn_id": 6,
+  "started_at": "2026-02-24T22:35:47Z",
+  "finished_at": "2026-02-24T22:42:00Z",
+  "branch": "feature/execute-turn-branch",
+  "tools_used": ["Read", "Write", "Glob", "Bash"],
+  "files": {
+    "docs/skills.md": {
+      "action": "created",
+      "sha256": "18194fdaabe95375b79ea8234ece36640dc7f1217376c0c885d180b029236e89"
+    }
+  },
+  "artifacts": {
+    "pull_request.md": "turn-6/pull_request.md",
+    "adr.md": "turn-6/adr.md",
+    "manifest.json": "turn-6/manifest.json"
+  }
+}

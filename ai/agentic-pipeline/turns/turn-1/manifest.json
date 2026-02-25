@@ -1,0 +1,37 @@
+{
+  "turnId": 1,
+  "tasks": [
+    {
+      "name": "Add turn branch creation to /execute skill",
+      "agent": "claude-opus-4-5",
+      "inputs": [
+        ".claude/skills/execute/SKILL.md"
+      ],
+      "outputs": [
+        {
+          "path": ".claude/skills/execute/SKILL.md",
+          "sha256": "0e5d789023eb4fcbbfcc6535b3ff30ae4cc6006b3866a5d0de2168a2b90c0a22"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "startedAt": "2026-02-24T20:37:58Z",
+    "finishedAt": "2026-02-24T20:51:00Z",
+    "tools": ["Read", "Edit", "Bash", "Write"]
+  },
+  "outputs": [
+    {
+      "path": ".claude/skills/execute/SKILL.md",
+      "sha256": "0e5d789023eb4fcbbfcc6535b3ff30ae4cc6006b3866a5d0de2168a2b90c0a22"
+    },
+    {
+      "path": "ai/agentic-pipeline/turns/turn-1/pull_request.md",
+      "sha256": "pending"
+    },
+    {
+      "path": "ai/agentic-pipeline/turns/turn-1/adr.md",
+      "sha256": "pending"
+    }
+  ]
+}

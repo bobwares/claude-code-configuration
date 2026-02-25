@@ -1,6 +1,6 @@
 ---
 name: mode
-description: Switch Claude's operating mode to change behavior. Arguments: architect | code | debug | review | test.
+description: "Switch Claude's operating mode to change behavior. Arguments: architect | code | debug | review | test."
 disable-model-invocation: false
 ---
 
