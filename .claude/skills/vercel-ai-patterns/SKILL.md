@@ -16,7 +16,7 @@ pnpm add ai @ai-sdk/anthropic
 ## Chat: Route Handler + Client Hook
 
 ```typescript
-// apps/web/app/api/chat/route.ts (Server)
+// app/web/src/app/api/chat/route.ts (Server)
 import { streamText } from 'ai';
 import { openai } from '@ai-sdk/openai';
 
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   return result.toDataStreamResponse();
 }
 
-// apps/web/components/ChatUI.tsx (Client)
+// app/web/src/components/ChatUI.tsx (Client)
 'use client';
 import { useChat } from 'ai/react';
 

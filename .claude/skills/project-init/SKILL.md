@@ -20,11 +20,37 @@ Or called automatically by `/execute`.
 
 ---
 
-## What You Always Create (Every Project)
+## Directory Structure
 
-### Root Files
+All application code lives under the `app/` directory. The Makefile stays at project root.
 
-**`package.json`** (pnpm workspace root):
+```
+project-root/
+├── Makefile                    # Stays at root
+├── app/                        # All app code and config
+│   ├── api/                    # NestJS (if nestjs in stack)
+│   ├── web/                    # Next.js (if nextjs in stack)
+│   ├── packages/
+│   │   ├── database/           # Drizzle (if drizzle in stack)
+│   │   └── types/              # Shared types (always)
+│   ├── services/
+│   │   └── enterprise/         # Spring Boot (if spring in stack)
+│   ├── package.json            # pnpm workspace root
+│   ├── pnpm-workspace.yaml
+│   ├── turbo.json
+│   ├── tsconfig.base.json
+│   ├── docker-compose.yml
+│   └── .env.example
+├── .claude/                    # Claude Code config (stays at root)
+├── ai/                         # Turn artifacts (stays at root)
+└── docs/                       # Documentation (stays at root)
+```
+
+---
+
+## What You Create in `app/`
+
+### `app/package.json` (pnpm workspace root):
 ```json
 {
   "name": "<app-name>",
@@ -47,15 +73,16 @@ Or called automatically by `/execute`.
 }
 ```
 
-**`pnpm-workspace.yaml`**:
+### `app/pnpm-workspace.yaml`:
 ```yaml
 packages:
-  - "apps/*"
+  - "api"
+  - "web"
   - "packages/*"
   - "services/*"
 ```
 
-**`turbo.json`**:
+### `app/turbo.json`:
 ```json
 {
   "$schema": "https://turbo.build/schema.json",
@@ -69,7 +96,7 @@ packages:
 }
 ```
 
-**`tsconfig.base.json`**:
+### `app/tsconfig.base.json`:
 ```json
 {
   "compilerOptions": {
@@ -90,7 +117,7 @@ packages:
 }
 ```
 
-**`.env.example`**:
+### `app/.env.example`:
 ```bash
 # Database
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/myapp_dev
@@ -108,7 +135,7 @@ API_URL=http://localhost:3001
 API_SECRET=changeme
 ```
 
-**`docker-compose.yml`**:
+### `app/docker-compose.yml`:
 ```yaml
 version: "3.9"
 services:
@@ -132,7 +159,7 @@ volumes:
   postgres_data:
 ```
 
-**`.gitignore`**:
+### Root `.gitignore` (at project root):
 ```
 node_modules/
 .next/
@@ -150,11 +177,11 @@ coverage/
 
 ## Stack-Conditional Scaffolding
 
-### If `nextjs` in stack → Create `apps/web/`
+### If `nextjs` in stack → Create `app/web/`
 
 Directory structure:
 ```
-apps/web/
+app/web/
 ├── package.json
 ├── tsconfig.json
 ├── next.config.ts
@@ -181,13 +208,13 @@ apps/web/
     └── setup.ts
 ```
 
-**`apps/web/package.json`** dependencies:
+**`app/web/package.json`** dependencies:
 - `next: "^15.0.0"`, `react: "^19.0.0"`, `react-dom: "^19.0.0"`
 - If shadcn: `tailwindcss`, `@tailwindcss/forms`, `class-variance-authority`, `clsx`, `tailwind-merge`, `lucide-react`, `@radix-ui/react-slot`
 - If ai: `ai`, `@ai-sdk/openai`, `@ai-sdk/anthropic`
 - Dev: `typescript`, `@types/react`, `@types/node`, `vitest`, `@vitejs/plugin-react`, `playwright`
 
-**`apps/web/next.config.ts`**:
+**`app/web/next.config.ts`**:
 ```typescript
 import type { NextConfig } from "next";
 
@@ -200,7 +227,7 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
-**`apps/web/src/app/layout.tsx`**:
+**`app/web/src/app/layout.tsx`**:
 ```typescript
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -222,7 +249,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-**`apps/web/src/app/page.tsx`**:
+**`app/web/src/app/page.tsx`**:
 ```typescript
 export default function HomePage() {
   return (
@@ -234,7 +261,7 @@ export default function HomePage() {
 }
 ```
 
-**`apps/web/src/lib/utils.ts`** (if shadcn):
+**`app/web/src/lib/utils.ts`** (if shadcn):
 ```typescript
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -246,11 +273,11 @@ export function cn(...inputs: ClassValue[]) {
 
 ---
 
-### If `nestjs` in stack → Create `apps/api/`
+### If `nestjs` in stack → Create `app/api/`
 
 Directory structure:
 ```
-apps/api/
+app/api/
 ├── package.json
 ├── tsconfig.json
 ├── tsconfig.build.json
@@ -274,7 +301,7 @@ apps/api/
     └── app.e2e-spec.ts
 ```
 
-**`apps/api/src/main.ts`**:
+**`app/api/src/main.ts`**:
 ```typescript
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
@@ -301,11 +328,11 @@ bootstrap();
 
 ---
 
-### If `spring` in stack → Create `services/enterprise/`
+### If `spring` in stack → Create `app/services/enterprise/`
 
 Directory structure:
 ```
-services/enterprise/
+app/services/enterprise/
 ├── pom.xml
 └── src/
     ├── main/
@@ -330,7 +357,7 @@ services/enterprise/
             └── EnterpriseApplicationTests.java
 ```
 
-**`services/enterprise/src/main/resources/application.yml`**:
+**`app/services/enterprise/src/main/resources/application.yml`**:
 ```yaml
 spring:
   application:
@@ -360,11 +387,11 @@ springdoc:
 
 ---
 
-### If `drizzle` in stack → Create `packages/database/`
+### If `drizzle` in stack → Create `app/packages/database/`
 
 Directory structure:
 ```
-packages/database/
+app/packages/database/
 ├── package.json
 ├── tsconfig.json
 ├── drizzle.config.ts
@@ -375,7 +402,7 @@ packages/database/
     └── migrations/
 ```
 
-**`packages/database/src/index.ts`**:
+**`app/packages/database/src/index.ts`**:
 ```typescript
 import { drizzle } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
@@ -390,7 +417,7 @@ export type DB = typeof db;
 export * from "./schema";
 ```
 
-**`packages/database/drizzle.config.ts`**:
+**`app/packages/database/drizzle.config.ts`**:
 ```typescript
 import { defineConfig } from "drizzle-kit";
 
@@ -406,17 +433,17 @@ export default defineConfig({
 
 ---
 
-### Always Create `packages/types/`
+### Always Create `app/packages/types/`
 
 ```
-packages/types/
+app/packages/types/
 ├── package.json
 ├── tsconfig.json
 └── src/
     └── index.ts
 ```
 
-**`packages/types/src/index.ts`**:
+**`app/packages/types/src/index.ts`**:
 ```typescript
 // Shared types across the monorepo
 // Generated by agentic-pipeline — add domain types here
@@ -450,17 +477,17 @@ export interface ApiError {
 After creating all files, run:
 
 ```bash
-# Install all dependencies
-pnpm install
+# Install all dependencies (from app/ directory)
+cd app && pnpm install
 
 # Initialize shadcn/ui if selected
-# (if shadcn in stack) cd apps/web && npx shadcn@latest init --yes
+# (if shadcn in stack) cd app/web && npx shadcn@latest init --yes
 
-# Start the database
-docker compose up -d postgres
+# Start the database (from app/ directory)
+cd app && docker compose up -d postgres
 
 # Verify the workspace builds
-pnpm typecheck
+cd app && pnpm typecheck
 ```
 
 Report the result:
@@ -469,11 +496,11 @@ Report the result:
 ✅ Project scaffolded
 
 Structure created:
-  apps/web/           Next.js 15 App Router
-  apps/api/           NestJS REST API
-  services/enterprise/ Spring Boot Enterprise API
-  packages/database/  Drizzle ORM + PostgreSQL
-  packages/types/     Shared TypeScript types
+  app/web/              Next.js 15 App Router
+  app/api/              NestJS REST API
+  app/services/enterprise/ Spring Boot Enterprise API
+  app/packages/database/   Drizzle ORM + PostgreSQL
+  app/packages/types/      Shared TypeScript types
 
 Next: /execute will continue with DDD parsing and code generation.
 ```

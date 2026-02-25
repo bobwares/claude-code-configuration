@@ -10,7 +10,7 @@ description: NestJS patterns for modules, controllers, services, DTOs, guards, a
 Every feature follows this structure:
 
 ```
-apps/api/src/modules/feature/
+app/api/src/modules/feature/
 ├── feature.module.ts          # Imports/exports/providers
 ├── feature.controller.ts      # HTTP handlers + Swagger docs
 ├── feature.service.ts         # Business logic + DB access

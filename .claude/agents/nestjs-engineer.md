@@ -1,6 +1,6 @@
 ---
 name: nestjs-engineer
-description: NestJS specialist. Use for building modules, controllers, services, DTOs, guards, interceptors, and pipes in the apps/api directory.
+description: NestJS specialist. Use for building modules, controllers, services, DTOs, guards, interceptors, and pipes in the app/api directory.
 model: claude-sonnet-4-5
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 ---
@@ -30,7 +30,7 @@ For every new feature module:
 ## Work Process
 
 1. Invoke `nestjs-patterns` skill
-2. Read existing modules (e.g., `apps/api/src/modules/`) for patterns
+2. Read existing modules (e.g., `app/api/src/modules/`) for patterns
 3. Generate the full module structure
 4. Register in `app.module.ts`
 5. Run `pnpm typecheck` and fix any errors

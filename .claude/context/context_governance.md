@@ -17,7 +17,7 @@ Defines the mandatory coding standards, versioning rules, git workflow conventio
 | Field | Required | Value |
 |-------|----------|-------|
 | `App` | ✅ | Application name from `project_context.md` |
-| `Package` | ✅ | Package or module path (e.g. `apps/api/src/modules/tasks`) |
+| `Package` | ✅ | Package or module path (e.g. `app/api/src/modules/tasks`) |
 | `File` | ✅ | Filename with extension |
 | `Version` | ✅ | Semantic version (start at `0.1.0` for new files) |
 | `Turns` | ✅ | Comma-separated list of TURN_IDs when file was modified |

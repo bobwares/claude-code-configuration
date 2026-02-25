@@ -44,8 +44,8 @@ If Java tests don't exist:
 
 | Failure Type | Agent to Spawn |
 |-------------|---------------|
-| TypeScript errors in `apps/web/` | `nextjs-engineer` |
-| TypeScript errors in `apps/api/` | `nestjs-engineer` |
+| TypeScript errors in `app/web/` | `nextjs-engineer` |
+| TypeScript errors in `app/api/` | `nestjs-engineer` |
 | TypeScript errors in `packages/database/` | `drizzle-dba` |
 | Java compile errors | `spring-engineer` |
 | Java test failures | `test-writer` with Java context |

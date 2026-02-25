@@ -191,7 +191,7 @@ Validate against `.claude/templates/turn/manifest.schema.json`.
       "inputs": ["docs/taskflow.prd.md", ".claude/domain/model.json"],
       "outputs": [
         {
-          "path": "apps/api/src/modules/tasks/tasks.service.ts",
+          "path": "app/api/src/modules/tasks/tasks.service.ts",
           "sha256": "abc123..."
         }
       ],
@@ -212,7 +212,7 @@ Validate against `.claude/templates/turn/manifest.schema.json`.
   },
   "outputs": [
     {
-      "path": "apps/api/src/modules/tasks/tasks.service.ts",
+      "path": "app/api/src/modules/tasks/tasks.service.ts",
       "sha256": "abc123..."
     }
   ]

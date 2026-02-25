@@ -21,7 +21,7 @@ You are a Next.js 15 App Router expert. You write production-quality Next.js cod
 ## File Structure
 
 ```
-apps/web/app/[route]/
+app/web/src/app/[route]/
 ├── page.tsx          # Server Component, receives awaited params
 ├── layout.tsx        # Persistent wrapper
 ├── loading.tsx       # Suspense boundary fallback

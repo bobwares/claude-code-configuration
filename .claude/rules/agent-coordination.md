@@ -52,11 +52,11 @@ Agents working on **different file scopes** never conflict. Assign each agent a 
 
 | Agent | Owns |
 |-------|------|
-| `drizzle-dba` | `packages/database/schema/`, `packages/database/migrations/` |
-| `nestjs-engineer` | `apps/api/src/modules/<feature>/` |
-| `spring-engineer` | `services/enterprise/src/main/java/` |
-| `nextjs-engineer` | `apps/web/app/<route>/`, `apps/web/components/` |
-| `test-writer` | `**/*.test.ts`, `**/*.spec.ts`, `e2e/` |
+| `drizzle-dba` | `app/packages/database/schema/`, `app/packages/database/migrations/` |
+| `nestjs-engineer` | `app/api/src/modules/<feature>/` |
+| `spring-engineer` | `app/services/enterprise/src/main/java/` |
+| `nextjs-engineer` | `app/web/src/app/<route>/`, `app/web/src/components/` |
+| `test-writer` | `**/*.test.ts`, `**/*.spec.ts`, `app/e2e/` |
 | `doc-generator` | `**/*.md`, JSDoc in any file |
 
 ## Coordination Rules

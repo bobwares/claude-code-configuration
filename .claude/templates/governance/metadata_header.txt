@@ -1,4 +1,4 @@
-/**
+du/**
  * App: {{APPLICATION_NAME}}
  * Package: {{PACKAGE_PATH}}
  * File: {{FILE_NAME}}

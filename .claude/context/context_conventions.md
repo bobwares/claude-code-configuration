@@ -46,8 +46,11 @@ project-root/
 │   └── context/
 │       └── project_context.md         # Project identity
 ├── claude/                            # Claude agent design docs
-├── apps/                              # Application source code
-├── packages/                          # Shared packages
+├── app/                               # All application code and config
+│   ├── api/                           # NestJS REST API
+│   ├── web/                           # Next.js App Router
+│   ├── packages/                      # Shared packages
+│   └── services/                      # Enterprise services
 └── .claude/                           # Pipeline configuration
     ├── agents/
     ├── skills/

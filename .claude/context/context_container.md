@@ -70,14 +70,16 @@ When installed into a target project, the pipeline creates:
 
 ## Project Source Directories (conventional monorepo)
 
+All application code lives under `./app/`. The Makefile stays at project root.
+
 | Path | Contents |
 |------|----------|
-| `./apps/web` | Next.js 15 App Router frontend |
-| `./apps/api` | NestJS REST API |
-| `./services/enterprise` | Java Spring Boot service |
-| `./packages/database` | Drizzle ORM schema and migrations |
-| `./packages/types` | Shared TypeScript types |
-| `./e2e` | Playwright end-to-end tests |
+| `./app/web` | Next.js 15 App Router frontend |
+| `./app/api` | NestJS REST API |
+| `./app/services/enterprise` | Java Spring Boot service |
+| `./app/packages/database` | Drizzle ORM schema and migrations |
+| `./app/packages/types` | Shared TypeScript types |
+| `./app/e2e` | Playwright end-to-end tests |
 
 ---
 

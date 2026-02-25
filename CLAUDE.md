@@ -95,7 +95,7 @@ Applied to **every file** written or modified. See `.claude/context/context_gove
 ```typescript
 /**
  * App: MyApp
- * Package: apps/api/src/modules/tasks
+ * Package: app/api/src/modules/tasks
  * File: tasks.service.ts
  * Version: 0.2.0
  * Turns: 1, 3
@@ -303,9 +303,10 @@ See `.claude/rules/tech-standards.md` for full detail. `.claude/context/context_
 
 ```
 project-root/
+├── Makefile                        # Build commands (stays at root)
 ├── ai/
-│   ├── agentic-pipeline/          # Turn artifacts
-│   │   ├── turns_index.csv        # Turn registry
+│   ├── agentic-pipeline/           # Turn artifacts
+│   │   ├── turns_index.csv         # Turn registry
 │   │   └── turns/
 │   │       └── turn-N/
 │   │           ├── session_context.md
@@ -314,15 +315,20 @@ project-root/
 │   │           └── manifest.json
 │   └── context/
 │       └── project_context.md
-├── apps/
+├── app/                            # All application code and config
+│   ├── api/                        # NestJS REST API
 │   ├── web/                        # Next.js 15 App Router
-│   └── api/                        # NestJS REST API
-├── services/
-│   └── enterprise/                 # Java Spring Boot (optional)
-├── packages/
-│   ├── database/                   # Drizzle ORM
-│   ├── types/                      # Shared TypeScript types
-│   └── ui/                         # Shared UI components (optional)
+│   ├── packages/
+│   │   ├── database/               # Drizzle ORM
+│   │   ├── types/                  # Shared TypeScript types
+│   │   └── ui/                     # Shared UI components (optional)
+│   ├── services/
+│   │   └── enterprise/             # Java Spring Boot (optional)
+│   ├── package.json                # pnpm workspaces root
+│   ├── pnpm-workspace.yaml
+│   ├── turbo.json
+│   ├── tsconfig.base.json
+│   └── docker-compose.yml
 ├── .claude/
 │   ├── agents/                     # 14 specialist agents
 │   ├── skills/                     # 36 skills (domain + workflow + governance)
@@ -332,8 +338,7 @@ project-root/
 │   ├── rules/                      # 3 rule files
 │   └── templates/                  # ADR, PR, manifest, governance templates
 ├── CLAUDE.md                       # This file
-├── USAGE.md                        # How to use the one-command pipeline
-└── package.json                    # pnpm workspaces root
+└── USAGE.md                        # How to use the one-command pipeline
 ```
 
 ---
@@ -341,13 +346,20 @@ project-root/
 ## Key Commands
 
 ```bash
-pnpm dev              # Start all services (requires turbo)
-pnpm dev:web          # Start Next.js only
-pnpm dev:api          # Start NestJS only
-pnpm build            # Production build
-pnpm test             # Run all tests
-pnpm lint             # Lint all packages
-pnpm typecheck        # TypeScript check all packages
-pnpm db:migrate       # Run Drizzle migrations
-pnpm db:studio        # Open Drizzle Studio
+# From project root (using Makefile)
+make dev              # Start all services
+make dev-web          # Start Next.js only
+make dev-api          # Start NestJS only
+make build            # Production build
+make test             # Run all tests
+make lint             # Lint all packages
+make typecheck        # TypeScript check
+make db-migrate       # Run Drizzle migrations
+make db-studio        # Open Drizzle Studio
+make setup            # Full setup: install, Docker, migrate
+make help             # List all targets
+
+# Or from app/ directory (direct pnpm)
+cd app && pnpm dev
+cd app && pnpm build
 ```

@@ -72,12 +72,12 @@ All skills live under `.claude/skills/`. Each skill is a directory containing a 
 **Directory mappings** — auto-activated when working in these paths:
 | Directory | Skill |
 |-----------|-------|
-| `apps/web/app` | nextjs-patterns |
-| `apps/api/src/modules` | nestjs-patterns |
-| `services/enterprise/src` | spring-patterns |
-| `packages/database/src/schema` | drizzle-patterns |
-| `packages/ui/src/components` | shadcn-patterns |
-| `apps/web/src/ai` | vercel-ai-patterns |
+| `app/web/src/app` | nextjs-patterns |
+| `app/api/src/modules` | nestjs-patterns |
+| `app/services/enterprise/src` | spring-patterns |
+| `app/packages/database/src/schema` | drizzle-patterns |
+| `app/packages/ui/src/components` | shadcn-patterns |
+| `app/web/src/ai` | vercel-ai-patterns |
 | `*.test.ts`, `*.spec.ts` | testing-patterns |
 
 ### Governance Skills

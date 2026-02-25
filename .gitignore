@@ -29,6 +29,13 @@ Thumbs.db
 coverage/
 .nyc_output/
 
+# Java
+target/
+
+# Turbo
+.turbo/
+
 # Claude agent output
 ai/agentic-pipeline/turns/
 ai/agentic-pipeline/turns_index.csv
+.claude/audit/

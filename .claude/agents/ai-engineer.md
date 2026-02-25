@@ -27,7 +27,7 @@ You are an AI integration expert using the Vercel AI SDK.
 ## Work Process
 
 1. Invoke `vercel-ai-patterns` skill
-2. Read existing AI routes in `apps/web/app/api/`
+2. Read existing AI routes in `app/web/src/app/api/`
 3. Implement route handler (server-side)
 4. Implement client component if needed
 5. Add error handling and loading states

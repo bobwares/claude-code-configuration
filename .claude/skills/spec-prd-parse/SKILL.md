@@ -149,7 +149,7 @@ stack: <layers used>
   - Service: `<Entity>Service` (business logic + Drizzle queries)
   - DTOs: `Create<Entity>Dto`, `<Entity>ResponseDto` using nestjs-zod
   - Swagger docs on all endpoints
-  - File: `apps/api/src/modules/<context-name>/`
+  - File: `app/api/src/modules/<context-name>/`
   - _Depends on_: T1, T2
   - _Blocks_: T6
 
@@ -157,19 +157,19 @@ stack: <layers used>
   - Test all CRUD endpoints
   - Test validation errors (400s)
   - Test not-found cases (404s)
-  - File: `apps/api/src/modules/<context-name>/<entity>.controller.spec.ts`
+  - File: `app/api/src/modules/<context-name>/<entity>.controller.spec.ts`
   - _Depends on_: T3
 
 ### Phase 3 — Frontend
 
 - [ ] **T6** `nextjs-engineer` — Create `/<entities>` page (list + detail)
-  - Route: `apps/web/src/app/<entities>/page.tsx`
+  - Route: `app/web/src/app/<entities>/page.tsx`
   - Server Component fetching from NestJS API
   - Loading skeleton, empty state, error state
   - _Depends on_: T1, T3
 
 - [ ] **T7** `nextjs-engineer` — Create create/edit form
-  - Route: `apps/web/src/app/<entities>/new/page.tsx`
+  - Route: `app/web/src/app/<entities>/new/page.tsx`
   - Server Action calling NestJS API
   - Zod validation, error display
   - _Depends on_: T6
