@@ -13,73 +13,73 @@
     "intentPattern": 4
   },
   "directoryMappings": {
-    "apps/web/app": "nextjs-patterns",
-    "apps/web/components": "nextjs-patterns",
-    "apps/web/hooks": "react-ui-patterns",
-    "apps/api/src/modules": "nestjs-patterns",
-    "apps/api/src/common": "nestjs-patterns",
-    "services/enterprise/src/main/java": "spring-patterns",
-    "packages/database/schema": "drizzle-patterns",
-    "packages/database/migrations": "drizzle-patterns",
-    "packages/ui/components": "shadcn-patterns",
-    "apps/web/app/api/chat": "vercel-ai-patterns"
+    "app/web/src/app": "pattern-nextjs",
+    "app/web/src/components": "pattern-nextjs",
+    "app/web/src/hooks": "pattern-react-ui",
+    "app/api/src/modules": "pattern-nestjs",
+    "app/api/src/common": "pattern-nestjs",
+    "app/services/enterprise/src/main/java": "pattern-spring",
+    "app/packages/database/schema": "pattern-drizzle",
+    "app/packages/database/migrations": "pattern-drizzle",
+    "app/packages/ui/components": "pattern-shadcn",
+    "app/web/src/app/api/chat": "pattern-vercel-ai"
   },
   "skills": {
-    "nextjs-patterns": {
+    "pattern-nextjs": {
       "priority": 9,
       "triggers": {
         "keywords": ["next.js", "nextjs", "app router", "server component", "client component", "server action", "route handler", "page.tsx", "layout.tsx", "use client", "use server", "revalidate", "metadata"],
         "keywordPatterns": ["\\bapp router\\b", "\\buse client\\b", "\\buse server\\b", "\\bnext\\.js\\b"],
-        "pathPatterns": ["apps/web/app/**", "**/page.tsx", "**/layout.tsx", "**/loading.tsx", "**/error.tsx", "**/route.ts"],
+        "pathPatterns": ["app/web/src/app/**", "**/page.tsx", "**/layout.tsx", "**/loading.tsx", "**/error.tsx", "**/route.ts"],
         "intentPatterns": ["(?:create|build|add).*(?:page|layout|route|component).*next", "(?:server|client).*component"]
       }
     },
-    "nestjs-patterns": {
+    "pattern-nestjs": {
       "priority": 9,
       "triggers": {
         "keywords": ["nestjs", "nest.js", "@module", "@controller", "@injectable", "@get", "@post", "@put", "@delete", "guard", "interceptor", "pipe", "dto", "nestjs-zod"],
         "keywordPatterns": ["@Module\\b", "@Controller\\b", "@Injectable\\b", "@Get\\b", "@Post\\b", "\\bnestjs\\b"],
-        "pathPatterns": ["apps/api/src/**", "**/*.controller.ts", "**/*.service.ts", "**/*.module.ts", "**/*.guard.ts", "**/*.dto.ts"],
+        "pathPatterns": ["app/api/src/**", "**/*.controller.ts", "**/*.service.ts", "**/*.module.ts", "**/*.guard.ts", "**/*.dto.ts"],
         "intentPatterns": ["(?:create|add).*(?:module|controller|service|guard|pipe|interceptor|dto)", "(?:nestjs|nest).*(?:endpoint|api)"]
       }
     },
-    "spring-patterns": {
+    "pattern-spring": {
       "priority": 8,
       "triggers": {
         "keywords": ["spring", "spring boot", "java", "jpa", "hibernate", "@restcontroller", "@service", "@repository", "@entity", "@springboottest", "maven", "pom.xml", "bean"],
         "keywordPatterns": ["@RestController", "@Service", "@Repository", "@Entity", "@SpringBootTest", "spring\\.boot"],
-        "pathPatterns": ["services/enterprise/src/main/java/**", "**/*.java", "**/pom.xml", "**/build.gradle"],
+        "pathPatterns": ["app/services/enterprise/src/main/java/**", "**/*.java", "**/pom.xml", "**/build.gradle"],
         "intentPatterns": ["(?:spring|java).*(?:controller|service|entity|repository)", "(?:jpa|hibernate).*(?:entity|query|relation)"]
       }
     },
-    "drizzle-patterns": {
+    "pattern-drizzle": {
       "priority": 8,
       "triggers": {
         "keywords": ["drizzle", "schema", "migration", "pgtable", "db.query", "db.insert", "db.update", "db.delete", "db.transaction", "$inferselect", "$inferinsert", "pgEnum", "pgIndex"],
         "keywordPatterns": ["\\bdrizzle\\b", "\\bpgTable\\b", "\\$inferSelect", "db\\.(?:query|insert|update|delete|transaction)"],
-        "pathPatterns": ["packages/database/**", "**/schema/**/*.ts", "**/migrations/**"],
+        "pathPatterns": ["app/packages/database/**", "**/schema/**/*.ts", "**/migrations/**"],
         "intentPatterns": ["(?:create|add|modify).*(?:schema|table|column|index|migration|relation)", "(?:drizzle|database).*(?:query|transaction)"]
       }
     },
-    "shadcn-patterns": {
+    "pattern-shadcn": {
       "priority": 7,
       "triggers": {
         "keywords": ["shadcn", "shadcn/ui", "radix-ui", "button", "dialog", "sheet", "table", "toast", "form", "input", "card", "badge", "cn(", "cva(", "tailwind"],
         "keywordPatterns": ["shadcn", "\\bcn\\(", "\\bcva\\(", "@/components/ui"],
-        "pathPatterns": ["packages/ui/**", "**/components/ui/**", "**/ui/*.tsx"],
+        "pathPatterns": ["app/packages/ui/**", "**/components/ui/**", "**/ui/*.tsx"],
         "intentPatterns": ["(?:create|build|add).*(?:ui|component|form|dialog|modal|button)", "(?:shadcn|tailwind).*(?:component|style)"]
       }
     },
-    "vercel-ai-patterns": {
+    "pattern-vercel-ai": {
       "priority": 8,
       "triggers": {
         "keywords": ["vercel ai", "ai sdk", "streamtext", "generatetext", "generateobject", "usechat", "usecompletion", "openai", "anthropic sdk", "embedding", "tool call", "streaming ai"],
         "keywordPatterns": ["\\bstreamText\\b", "\\bgenerateObject\\b", "\\buseChat\\b", "from 'ai'", "from \"ai\"", "ai/react"],
-        "pathPatterns": ["apps/web/app/api/chat/**", "**/ai/**/*.ts", "**/ai/**/*.tsx"],
+        "pathPatterns": ["app/web/src/app/api/chat/**", "**/ai/**/*.ts", "**/ai/**/*.tsx"],
         "intentPatterns": ["(?:add|implement|build).*(?:ai|chat|streaming|llm|gpt|claude feature)", "(?:stream|generate).*(?:text|response|object)", "(?:tool call|embedding|vector search)"]
       }
     },
-    "testing-patterns": {
+    "pattern-testing": {
       "priority": 9,
       "triggers": {
         "keywords": ["vitest", "playwright", "test", "spec", "mock", "factory", "e2e", "coverage", "tdd", "beforeeach", "aftereach", "describe", "it(", "expect("],
@@ -89,16 +89,16 @@
         "excludePatterns": ["contest", "protest", "interest", "latest"]
       }
     },
-    "react-ui-patterns": {
+    "pattern-react-ui": {
       "priority": 7,
       "triggers": {
         "keywords": ["loading state", "error state", "empty state", "skeleton", "suspense", "usememo", "usecallback", "usestate", "useeffect", "custom hook", "use prefix"],
         "keywordPatterns": ["\\buse[A-Z]\\w+\\b", "\\bloading.*state\\b", "\\bempty.*state\\b", "\\berror.*state\\b"],
-        "pathPatterns": ["apps/web/hooks/**", "**/use*.ts", "**/use*.tsx"],
+        "pathPatterns": ["app/web/src/hooks/**", "**/use*.ts", "**/use*.tsx"],
         "intentPatterns": ["(?:handle|show|implement).*(?:loading|error|empty).*state", "(?:create|write).*custom.*hook", "(?:loading|error|empty).*(?:state|handling|boundary)"]
       }
     },
-    "api-design-patterns": {
+    "pattern-api-design": {
       "priority": 7,
       "triggers": {
         "keywords": ["rest api", "api design", "endpoint", "pagination", "cursor", "response envelope", "error code", "openapi", "swagger", "api versioning", "rate limit"],

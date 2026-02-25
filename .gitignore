@@ -1,34 +1,42 @@
-# Node / pnpm
+# Node results
 node_modules/
 **/node_modules/
-pnpm-lock.yaml
+.pnpm-debug.log*
+pnpm-debug.log*
 
-# Vite/TypeScript/Next.js build output
+# Build output
 dist/
 build/
-.next/
+out/
+**/.next/
+apps/web/.next/
+apps/api/dist/
+packages/**/dist/
+packages/**/build/
+apps/**/build/
+apps/**/dist/
 
-# Logs
+# Temporary files
 *.log
-npm-debug.log*
-pnpm-debug.log*
+*.tmp
+*.temp
+tmp/
+temp/
+.cache/
+coverage/
+**/coverage/
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
 
 # Environment
 .env
 .env.*
 
-# IDEs
-.idea/
-.vscode/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Test artifacts
-coverage/
-.nyc_output/
-
-# Claude agent output
+# Claude turn artifacts
 ai/agentic-pipeline/turns/
-ai/agentic-pipeline/turns_index.csv
+.claude/audit/

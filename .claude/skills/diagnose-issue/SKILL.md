@@ -221,8 +221,8 @@ Spawn the appropriate specialist agent(s) based on the affected files:
 
 | File Pattern | Agent |
 |--------------|-------|
-| `apps/web/**` | `nextjs-engineer` |
-| `apps/api/**` | `nestjs-engineer` |
+| `app/web/**` | `nextjs-engineer` |
+| `app/api/**` | `nestjs-engineer` |
 | `services/enterprise/**` | `spring-engineer` |
 | `packages/database/**` | `drizzle-dba` |
 | `*.test.ts`, `*.spec.ts` | `test-writer` |

@@ -52,9 +52,9 @@ OVERALL: ✅ READY TO SHIP | ❌ NEEDS FIXES
 ## Fix Failures
 
 Route failures to the right agent:
-- TypeScript errors in `apps/web/` → spawn `nextjs-engineer`
-- TypeScript errors in `apps/api/` → spawn `nestjs-engineer`
-- TypeScript errors in `packages/database/` → spawn `drizzle-dba`
+- TypeScript errors in `app/web/` → spawn `nextjs-engineer`
+- TypeScript errors in `app/api/` → spawn `nestjs-engineer`
+- TypeScript errors in `app/packages/database/` → spawn `drizzle-dba`
 - Java errors → spawn `spring-engineer`
 - Test failures → spawn `test-writer`
 - Lint errors → spawn the engineer matching the failing file path

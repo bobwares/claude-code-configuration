@@ -105,7 +105,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$(pwd)/.claude/hooks/audit-log.sh\" 2>/dev/null; exit 0",
+            "command": "bash \"$(pwd)/.claude/hooks/wraudit-log.sh\" 2>/dev/null; exit 0",
             "timeout": 3
           }
         ]

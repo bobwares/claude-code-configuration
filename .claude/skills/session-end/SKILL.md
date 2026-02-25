@@ -1,6 +1,6 @@
 ---
 name: session-end
-description: Complete turn lifecycle post-execution artifacts, update memory bank, and save session state. Run at the end of every session or after completing a turn.
+description: Complete turn lifecycle post-execution artifacts and save session state. Run at the end of every session or after completing a turn.
 disable-model-invocation: false
 ---
 
@@ -18,7 +18,21 @@ Run:
 
 If a turn was executed this session (TURN_ID is set), complete all Post-Execution artifacts:
 
-### Step 2a: Write pull_request.md
+### Step 2a: Update execution_trace.json
+
+File: `./ai/agentic-pipeline/turns/turn-${TURN_ID}/execution_trace.json`
+
+Update and save:
+- `skillsExecuted`: all skills actually executed in this turn
+- `agentsExecuted`: all agents actually executed in this turn
+- `finishedAt`: ISO UTC timestamp when work completed
+
+Rules:
+- Do not infer from available skills; record only what was actually used
+- Include `claude` in `agentsExecuted` when no specialist agent was spawned
+- Keep values unique and sorted for diff stability
+
+### Step 2b: Write pull_request.md
 
 File: `./ai/agentic-pipeline/turns/turn-${TURN_ID}/pull_request.md`
 
@@ -29,9 +43,10 @@ Fill in:
 - Start and end timestamps
 - Tasks executed (table)
 - Files added/modified (tables with metadata header descriptions)
+- Execution trace summary (skills and agents executed)
 - Compliance checklist (check all boxes that apply)
 
-### Step 2b: Write adr.md
+### Step 2c: Write adr.md
 
 File: `./ai/agentic-pipeline/turns/turn-${TURN_ID}/adr.md`
 
@@ -39,7 +54,7 @@ Apply ADR policy from `.claude/context/context_adr.md`:
 - If architectural decisions were made → Full ADR using `.claude/templates/adr/adr_template.md`
 - If no architectural decisions → Minimal one-liner
 
-### Step 2c: Write manifest.json
+### Step 2d: Write manifest.json
 
 File: `./ai/agentic-pipeline/turns/turn-${TURN_ID}/manifest.json`
 
@@ -53,14 +68,19 @@ sha256sum <file> | cut -d' ' -f1
 
 Validate against: `.claude/templates/turn/manifest.schema.json`
 
-### Step 2d: Update turns_index.csv
+Include execution summary:
+- `execution.tracePath`
+- `execution.skillsExecuted`
+- `execution.agentsExecuted`
+
+### Step 2e: Update turns_index.csv
 
 Append row:
 ```
 ${TURN_ID},${TURN_START_TIME},${TURN_END_TIME},${ELAPSED_SECONDS},${BRANCH},${COMMIT_SHA},${TASK_SUMMARY}
 ```
 
-### Step 2e: Tag the commit
+### Step 2f: Tag the commit
 
 ```bash
 git tag turn/${TURN_ID}
@@ -77,59 +97,7 @@ If yes: spawn `git-guardian` to create a commit following the `AI Coding Agent C
 
 ---
 
-## Step 4: Update Memory Bank
-
-### Update activeContext.md
-
-```markdown
----
-updatedAt: [ISO timestamp]
----
-
-## Current State
-**Branch**: [branch]
-**Last worked on**: [date]
-**Turn**: [TURN_ID]
-**What was done**: [brief bullets]
-**Next session**: [what to pick up next]
-**Open blockers**: [any blockers]
-```
-
-### Update progress.md
-
-- Check off completed tasks
-- Add any newly discovered tasks
-- Update epic status percentages
-- Note current TURN_ID
-
-### Append to sessionHistory.md
-
-```markdown
-## [YYYY-MM-DD] — Turn ${TURN_ID} — [Branch]
-**Duration**: [TURN_ELAPSED_TIME]
-**Accomplished**:
-- [bullet]
-- [bullet]
-**Decisions**:
-- [reference any ADRs written]
-**Next Session**:
-- [what to pick up]
----
-```
-
-### If new patterns discovered: append to conventions.md
-
-### If full ADR written: append summary to decisionLog.md
-
-```markdown
-## [YYYY-MM-DD] — Turn ${TURN_ID}: [Decision Title]
-[One paragraph summary of the decision and rationale]
-Full ADR: `./ai/agentic-pipeline/turns/turn-${TURN_ID}/adr.md`
-```
-
----
-
-## Step 5: Confirm Completion
+## Step 4: Confirm Completion
 
 Report:
 
@@ -143,9 +111,6 @@ Report:
                │ manifest.json ✓
                │ turns_index.csv updated ✓
                │ git tag turn/${TURN_ID} ✓
-  MEMORY       │ activeContext.md updated ✓
-               │ sessionHistory.md updated ✓
-               │ decisionLog.md updated (if ADR written)
 ═══════════════════════════════════════════════════════════
 Session saved. See you next time!
 ```

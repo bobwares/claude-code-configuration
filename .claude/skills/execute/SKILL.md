@@ -1,6 +1,6 @@
 ---
 name: execute
-description: One-command full app build. Provide PRD path, DDD path, and tech stack — the pipeline does the rest. Usage: /execute prd=<path> ddd=<path> stack=<stack>
+description: "One-command full app build. Provide PRD path, DDD path, and tech stack file — the pipeline does the rest. Usage: /execute prd=<path> ddd=<path> stack=<path-to-tech-stack.md>"
 ---
 
 # Execute — Full Pipeline Trigger
@@ -16,35 +16,29 @@ The user has supplied everything you need. **Do not ask any clarifying questions
 Parse the invocation arguments. Accepted formats:
 
 ```
-/execute prd=docs/my-app.prd.md ddd=docs/my-app.ddd.md stack=nextjs+nestjs+drizzle+shadcn
-/execute prd=my-app ddd=my-app stack=nextjs+nestjs+drizzle+shadcn+spring
-/execute docs/prd.md docs/ddd.md nextjs+nestjs+drizzle+shadcn
+/execute {{pulls prd.md, ddd.md, and tech-stack.md from specs directory.}}
+/execute prd=specs/my-app.prd.md ddd=specs/my-app.ddd.md stack=specs/tech-stack.md
+/execute prd=my-app ddd=my-app stack=my-app
+/execute specs/prd.md specs/ddd.md specs/tech-stack.md
 ```
 
 Resolution rules:
-- If the path ends in `.md` and exists, use it directly
-- If it's a bare name like `my-app`, check `.claude/prds/my-app.prd.md`, then `.claude/prds/my-app.md`, then `docs/my-app.prd.md`
-- For the DDD file: check `.claude/ddd/<name>.ddd.md`, then `docs/<name>.ddd.md`
-- Tech stack: parse `+`-separated tokens. Valid tokens:
-  - `nextjs` or `next` — Next.js 15 App Router frontend
-  - `nestjs` or `nest` — NestJS API backend
-  - `spring` or `springboot` — Java Spring Boot enterprise API
-  - `drizzle` — Drizzle ORM + PostgreSQL
-  - `shadcn` or `ui` — shadcn/ui + Tailwind CSS
-  - `ai` or `vercel-ai` — Vercel AI SDK
+- **PRD file**: If path ends in `.md` and exists, use directly. If bare name like `my-app`, check `.claude/prds/my-app.prd.md`, then `specs/my-app.prd.md`
+- **DDD file**: If path ends in `.md` and exists, use directly. If bare name, check `.claude/ddd/<name>.ddd.md`, then `specs/<name>.ddd.md`
+- **Tech stack file**: If path ends in `.md` and exists, use directly. If bare name, check `.claude/stacks/<name>.tech-stack.md`, then `specs/<name>.tech-stack.md`
 
 If any required input is missing or a file does not exist, report exactly what is missing and stop. Example:
 ```
-❌ Cannot execute: PRD file not found.
-   Tried: .claude/prds/my-app.prd.md, docs/my-app.prd.md
-   Fix: Create the PRD file or run /spec-prd-new my-app first.
+❌ Cannot execute: Tech stack file not found.
+   Tried: .claude/stacks/my-app.tech-stack.md, specs/my-app.tech-stack.md
+   Fix: Create the tech stack file first.
 ```
 
 ---
 
 ## Step 1: Read and Validate Inputs
 
-Read both input files completely.
+Read all three input files completely.
 
 **Read the PRD** and confirm it contains:
 - A clear problem statement
@@ -55,7 +49,11 @@ Read both input files completely.
 - At least one bounded context
 - Domain entities or aggregates
 
-**If either document is missing critical sections**, report what is incomplete and stop. The user must fix the document before executing.
+**Read the tech stack file** and confirm it contains:
+- At least one technology selection
+- Valid technology tokens (see Tech Stack File Format below)
+
+**If any document is missing critical sections**, report what is incomplete and stop. The user must fix the document before executing.
 
 Print a validation summary:
 ```
@@ -118,7 +116,25 @@ Document all loaded context values in a markdown table:
 - Active branch
 - Task description (execute pipeline for the specified app)
 
-**This file MUST exist before proceeding to Step 3.**
+**This file MUST exist before proceeding to Step 2e.**
+
+### Step 2e: Create Turn Branch
+
+Create a dedicated branch for this execution run. This provides isolation and full traceability for all changes made during this `/execute` invocation.
+
+```bash
+# Ensure we're on an up-to-date main
+git checkout main
+git pull origin main
+
+# Create and push the turn branch
+git checkout -b turn-${TURN_ID}
+git push -u origin turn-${TURN_ID}
+```
+
+This branch becomes the working branch for this execution. All epic branches in Step 5b will be created FROM this turn branch.
+
+**The turn branch MUST exist before proceeding to Step 3.**
 
 ---
 
@@ -134,16 +150,16 @@ Wait for `project-init` to complete before proceeding.
 
 ## Step 4: Parse DDD into Domain Model
 
-Invoke the `ddd-parse` skill with the DDD document path.
+Invoke the `spec-parse-ddd` skill with the DDD document path.
 
-This skill reads the DDD document and outputs a structured domain model at `.claude/domain/model.json` containing:
+This skill reads the DDD document and outputs a structured domain model at `@specs/domain/model.json` containing:
 - Bounded contexts with their aggregates
 - Entities and their fields
 - Value objects
 - Domain events
 - Relationships between aggregates
 
-Wait for `ddd-parse` to complete before proceeding.
+Wait for `spec-parse-ddd` to complete before proceeding.
 
 ---
 
@@ -157,7 +173,7 @@ Invoke the `spec-prd-parse` skill with the PRD name AND the domain model.
 - Ensure API tasks align with domain service boundaries
 - Generate frontend tasks that reflect the domain language
 
-This produces `.claude/epics/<app-name>/epic.md` with a full, DDD-aware task breakdown.
+This produces `specs/epics/<app-name>/epic.md` with a full, DDD-aware task breakdown.
 
 Wait for `spec-prd-parse` to complete before proceeding.
 
@@ -167,7 +183,7 @@ Wait for `spec-prd-parse` to complete before proceeding.
 
 For each epic produced in Step 5a:
 
-1. **Branch**: `git checkout -b epic/<epic-name>` (from main)
+1. **Branch**: `git checkout -b epic/<epic-name>` (from turn-${TURN_ID} branch)
 2. **Spawn orchestrator**: provide the full epic task breakdown and domain model as context
 3. The orchestrator will:
    - Execute all tasks in dependency order using specialist agents
@@ -396,19 +412,45 @@ Next steps:
 - <ContextA> → <ContextB>: <relationship type and reason>
 ```
 
-### Tech Stack Tokens
+### Tech Stack File Format (`.tech-stack.md`)
+
+```markdown
+# <App Name> — Tech Stack
+
+## Frontend
+- nextjs          # Next.js 15 App Router (app/web/)
+- shadcn          # shadcn/ui + Tailwind CSS
+
+## Backend
+- nestjs          # NestJS REST API (app/api/)
+# - spring        # Java Spring Boot (services/enterprise/) — uncomment if needed
+
+## Database
+- drizzle         # Drizzle ORM + PostgreSQL (packages/database/)
+
+## AI (optional)
+# - ai            # Vercel AI SDK — uncomment if needed
+```
+
+**Valid tokens**:
 
 | Token | What It Installs |
 |-------|-----------------|
-| `nextjs` | Next.js 15 App Router (apps/web/) |
-| `nestjs` | NestJS REST API (apps/api/) |
-| `spring` | Java Spring Boot (services/enterprise/) |
+| `nextjs` or `next` | Next.js 15 App Router (app/web/) |
+| `nestjs` or `nest` | NestJS REST API (app/api/) |
+| `spring` or `springboot` | Java Spring Boot (services/enterprise/) |
 | `drizzle` | Drizzle ORM + PostgreSQL (packages/database/) |
-| `shadcn` | shadcn/ui + Tailwind CSS (in apps/web/) |
-| `ai` | Vercel AI SDK (in apps/web/ and/or apps/api/) |
+| `shadcn` or `ui` | shadcn/ui + Tailwind CSS (in app/web/) |
+| `ai` or `vercel-ai` | Vercel AI SDK (in app/web/ and/or app/api/) |
+
+**Parsing rules**:
+- Lines starting with `#` are comments (ignored)
+- Lines starting with `- ` define a technology token
+- Inline comments after `#` are allowed: `- nextjs  # comment`
+- Empty lines are ignored
 
 ### Full Example Invocation
 
 ```
-/execute prd=docs/taskflow.prd.md ddd=docs/taskflow.ddd.md stack=nextjs+nestjs+drizzle+shadcn
+/execute prd=specs/taskflow.prd.md ddd=specs/taskflow.ddd.md stack=specs/taskflow.tech-stack.md
 ```
