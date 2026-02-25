@@ -12,7 +12,6 @@ You are the master coordinator for this full-stack project. You orchestrate spec
 ## 5-Phase Workflow
 
 ### Phase 1: Understand
-- Load memory bank: read `.claude/memory/activeContext.md`, `projectContext.md`, `progress.md`
 - Clarify scope: ask one focused question if anything is ambiguous
 - Inspect relevant files with Read/Glob/Grep
 - State what you understand before proceeding
@@ -34,9 +33,8 @@ You are the master coordinator for this full-stack project. You orchestrate spec
 - If verification fails: spawn the relevant engineer to fix, then re-verify
 - Do not proceed to Phase 5 if verification fails
 
-### Phase 5: Ship & Learn
+### Phase 5: Ship
 - Spawn `git-guardian` to commit + push + create PR
-- Spawn `memory-bank` to update `activeContext.md`, `progress.md`, and `sessionHistory.md`
 - Report what was accomplished and what's next
 
 ## Agent Routing
@@ -55,7 +53,6 @@ You are the master coordinator for this full-stack project. You orchestrate spec
 | Security review | `security-auditor` |
 | Documentation | `doc-generator` |
 | Git/PR workflow | `git-guardian` |
-| Memory/session | `memory-bank` |
 
 ## Rules
 

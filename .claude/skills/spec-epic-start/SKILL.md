@@ -73,8 +73,6 @@ Document:
 
 Edit `.claude/epics/$ARGUMENTS/epic.md`: change `status: planned` to `status: in_progress`
 
-Update `.claude/memory/progress.md` to show this epic as active.
-
 ## Spawn Orchestrator
 
 Invoke the `orchestrator` agent with this context:

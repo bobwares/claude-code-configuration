@@ -1,6 +1,6 @@
 ---
 name: session-start
-description: Load memory bank, initialize turn lifecycle, and orient to current project state. Run at the start of every Claude Code session.
+description: Initialize turn lifecycle and orient to current project state. Run at the start of every Claude Code session.
 disable-model-invocation: false
 ---
 
@@ -17,22 +17,14 @@ Read all context files (in order):
 - `.claude/context/context_adr.md` — ADR policy
 - `.claude/context/context_skills.md` — available skills reference
 
-## Step 2: Load Memory Bank
-
-Read all memory files:
-- `.claude/memory/projectContext.md`
-- `.claude/memory/activeContext.md`
-- `.claude/memory/progress.md`
-- `.claude/memory/sessionHistory.md` (last 30 lines)
-
-## Step 3: Load Git State
+## Step 2: Load Git State
 
 Run:
 - `git branch --show-current`
 - `git status --short`
 - `git log --oneline -5`
 
-## Step 4: Resolve Turn State
+## Step 3: Resolve Turn State
 
 Check if the turn index exists:
 ```bash
@@ -46,7 +38,7 @@ else
 fi
 ```
 
-## Step 5: Display Session Status
+## Step 4: Display Session Status
 
 Present a session orientation table:
 
@@ -54,11 +46,7 @@ Present a session orientation table:
 ═══════════════════════════════════════════════════════════
   AGENTIC-PIPELINE SESSION START
 ═══════════════════════════════════════════════════════════
-  PROJECT      │ [name from projectContext]
-  STACK        │ [tech stack summary]
   BRANCH       │ [current branch]
-  LAST SESSION │ [date + what was accomplished]
-  IN PROGRESS  │ [active epic/task if any]
   UNCOMMITTED  │ [N files changed]
   NEXT TURN ID │ [NEXT_TURN_ID]
   GOVERNANCE   │ Active — metadata headers + ADR required
@@ -66,7 +54,7 @@ Present a session orientation table:
 ═══════════════════════════════════════════════════════════
 ```
 
-## Step 6: Confirm Readiness
+## Step 5: Confirm Readiness
 
 End with: "Context loaded. Governance active. Turn {{NEXT_TURN_ID}} ready. What would you like to work on?"
 

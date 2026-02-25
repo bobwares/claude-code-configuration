@@ -1,6 +1,6 @@
 ---
 name: session-end
-description: Complete turn lifecycle post-execution artifacts, update memory bank, and save session state. Run at the end of every session or after completing a turn.
+description: Complete turn lifecycle post-execution artifacts and save session state. Run at the end of every session or after completing a turn.
 disable-model-invocation: false
 ---
 
@@ -77,59 +77,7 @@ If yes: spawn `git-guardian` to create a commit following the `AI Coding Agent C
 
 ---
 
-## Step 4: Update Memory Bank
-
-### Update activeContext.md
-
-```markdown
----
-updatedAt: [ISO timestamp]
----
-
-## Current State
-**Branch**: [branch]
-**Last worked on**: [date]
-**Turn**: [TURN_ID]
-**What was done**: [brief bullets]
-**Next session**: [what to pick up next]
-**Open blockers**: [any blockers]
-```
-
-### Update progress.md
-
-- Check off completed tasks
-- Add any newly discovered tasks
-- Update epic status percentages
-- Note current TURN_ID
-
-### Append to sessionHistory.md
-
-```markdown
-## [YYYY-MM-DD] — Turn ${TURN_ID} — [Branch]
-**Duration**: [TURN_ELAPSED_TIME]
-**Accomplished**:
-- [bullet]
-- [bullet]
-**Decisions**:
-- [reference any ADRs written]
-**Next Session**:
-- [what to pick up]
----
-```
-
-### If new patterns discovered: append to conventions.md
-
-### If full ADR written: append summary to decisionLog.md
-
-```markdown
-## [YYYY-MM-DD] — Turn ${TURN_ID}: [Decision Title]
-[One paragraph summary of the decision and rationale]
-Full ADR: `./ai/agentic-pipeline/turns/turn-${TURN_ID}/adr.md`
-```
-
----
-
-## Step 5: Confirm Completion
+## Step 4: Confirm Completion
 
 Report:
 
@@ -143,9 +91,6 @@ Report:
                │ manifest.json ✓
                │ turns_index.csv updated ✓
                │ git tag turn/${TURN_ID} ✓
-  MEMORY       │ activeContext.md updated ✓
-               │ sessionHistory.md updated ✓
-               │ decisionLog.md updated (if ADR written)
 ═══════════════════════════════════════════════════════════
 Session saved. See you next time!
 ```

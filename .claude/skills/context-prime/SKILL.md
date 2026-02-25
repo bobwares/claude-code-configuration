@@ -1,20 +1,12 @@
 ---
 name: context-prime
-description: Load all project context into the current conversation for maximum effectiveness. Run at start of a focused work session.
+description: Load project context into the current conversation for maximum effectiveness. Run at start of a focused work session.
 disable-model-invocation: false
 ---
 
 # Context Prime
 
 Load all relevant context for this session.
-
-## Memory Bank
-
-Read:
-- `.claude/memory/projectContext.md`
-- `.claude/memory/activeContext.md`
-- `.claude/memory/conventions.md`
-- `.claude/memory/progress.md`
 
 ## Project State
 
@@ -26,7 +18,7 @@ git log --oneline -10
 
 ## Active Epic (if any)
 
-If there's an in-progress epic in progress.md:
+If there's an in-progress epic in `.claude/epics/`:
 - Read `.claude/epics/<epic-name>/epic.md`
 
 ## Stack Summary
@@ -42,12 +34,11 @@ Present a comprehensive context summary:
 ```
 CONTEXT LOADED
 ==============
-Project: [name]
+Project: [name from package.json or CLAUDE.md]
 Stack: [summary]
 Branch: [branch]
-Active Work: [epic/task]
+Active Work: [epic/task if any]
 Recent: [last 3 commits]
-Conventions: [key patterns]
 
-Ready for deep work on [project name].
+Ready for deep work.
 ```

@@ -20,8 +20,6 @@ Mode: $ARGUMENTS
 
 ## Activate Mode
 
-Write the active mode to `.claude/memory/activeContext.md` under `## Current Mode`.
-
 Announce:
 
 ### architect
