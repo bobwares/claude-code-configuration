@@ -228,7 +228,7 @@ The memory bank lives in `.claude/memory/`. Always load with `/session-start`.
 ## Skills Quick Reference
 
 **Domain skills** (auto-suggested by skill-eval hook):
-`nextjs-patterns`, `nestjs-patterns`, `spring-patterns`, `drizzle-patterns`, `shadcn-patterns`, `vercel-ai-patterns`, `testing-patterns`, `react-ui-patterns`, `api-design-patterns`, `systematic-debugging`
+`pattern-nextjs`, `pattern-nestjs`, `pattern-spring`, `pattern-drizzle`, `pattern-shadcn`, `pattern-vercel-ai`, `pattern-testing`, `pattern-react-ui`, `pattern-api-design`, `systematic-debugging`
 
 **Governance skills** (always active):
 `governance`, `adr`

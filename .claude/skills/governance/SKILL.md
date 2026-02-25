@@ -21,7 +21,16 @@ Enforce mandatory coding standards on every file written or modified. These rule
 
 **Every source file** (TypeScript, JavaScript, Java, Python, SQL, shell scripts, YAML infrastructure files) **must begin with a metadata header comment**.
 
-Exceptions: `pom.xml`, `package.json`, generated files, binary files, and pure config files with no comment syntax.
+Explicit exemption list: 
+- globals.css
+- turbo.json 
+- binary files
+- pure config files with no comment syntax
+- pom.xml, 
+- package.json
+- toml files.
+
+2. Metadata fields table with "Required" column (clearer spec)
 
 ### TypeScript / JavaScript
 ```typescript
@@ -179,77 +188,8 @@ git push origin turn/${TURN_ID}
 
 Use environment variables or secrets management for all sensitive values.
 
----
 
-## 8. Turn Lifecycle Artifacts — MANDATORY
-
-**Every turn must produce 4 artifacts** in `./ai/agentic-pipeline/turns/turn-${TURN_ID}/`:
-
-| Artifact | When Created | Purpose |
-|----------|-------------|---------|
-| `session_context.md` | Pre-Execution (before code) | Documents loaded context, TURN_ID, start time |
-| `pull_request.md` | Post-Execution | Lists files changed, tasks executed, compliance status |
-| `adr.md` | Post-Execution | Full or minimal architecture decision record |
-| `manifest.json` | Post-Execution | SHA-256 hashes of all outputs, provenance |
-
-**Additional requirements**:
-- `turns_index.csv` must be updated with the turn row
-- Git tag `turn/${TURN_ID}` must be created and pushed
-
-**A turn is not complete until all 4 artifacts exist and the index is updated.**
-
----
-
-## 9. SKILL.md File Format — MANDATORY
-
-When creating or modifying skill files in `.claude/skills/`, the YAML frontmatter **must** include all required fields.
-
-### Required YAML Header Format
-
-```yaml
----
-name: skill-name
-description: What this skill does (one sentence)
-triggers:
-  - when condition 1
-  - when condition 2
-  - when condition 3
----
-```
-
-### Fields
-
-| Field | Required | Description |
-|-------|----------|-------------|
-| `name` | ✅ Yes | Skill identifier (kebab-case, matches directory name) |
-| `description` | ✅ Yes | One-sentence description of the skill's purpose |
-| `triggers` | ✅ Yes | List of conditions when this skill should activate |
-| `disable-model-invocation` | Optional | Set to `true` to prevent auto-invocation |
-
-### Example
-
-```yaml
----
-name: spring-patterns
-description: Spring WebFlux + R2DBC reactive patterns for non-blocking APIs.
-triggers:
-  - when working in services/enterprise directory
-  - when building Spring Boot REST APIs
-  - when implementing reactive endpoints
----
-```
-
-### Validation
-
-Before committing a SKILL.md file, verify:
-- [ ] `name` field matches the skill directory name
-- [ ] `description` field is present and descriptive
-- [ ] `triggers` field contains at least one trigger condition
-- [ ] YAML frontmatter is properly delimited with `---`
-
----
-
-## 10. Compliance Checklist
+## 8. Compliance Checklist
 
 Before every commit, verify:
 
@@ -261,6 +201,4 @@ Before every commit, verify:
 - [ ] Linting passes
 - [ ] No sensitive data in committed files
 - [ ] ADR written (full or minimal) for this turn
-- [ ] Turn tagged: `turn/${TURN_ID}`
-- [ ] All 4 turn artifacts exist in turn directory
-- [ ] turns_index.csv updated with turn row
+
