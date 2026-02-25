@@ -7,7 +7,7 @@ This document catalogs all hooks defined under the `.claude` directory. Hooks ar
 | Name | Purpose | Trigger | Skills/Agents Used |
 |------|---------|---------|-------------------|
 | **SessionStart** | Loads context files, displays turn status and governance state | `SessionStart` | None (loads context files: `context_container.md`, `context_session.md`, `context_conventions.md`, `context_governance.md`, `context_orchestration.md`, `context_adr.md`, `context_skills.md`) |
-| **turn-init.sh** | Creates turn directory and `session_context.md` for provenance tracking | `UserPromptSubmit` | None (infrastructure for turn lifecycle) |
+| **turn-init.sh** | Creates turn directory, `session_context.md`, and `execution_trace.json` for provenance tracking | `UserPromptSubmit` | None (infrastructure for turn lifecycle) |
 | **skill-eval.sh** | Analyzes user prompts and suggests relevant domain skills to activate | `UserPromptSubmit` | Suggests: `pattern-nextjs`, `pattern-nestjs`, `pattern-spring`, `pattern-drizzle`, `pattern-shadcn`, `pattern-vercel-ai`, `pattern-testing`, `pattern-react-ui`, `pattern-api-design`, `systematic-debugging` |
 | **audit-log.sh** | Logs all Bash invocations for debugging and compliance | `PreToolUse(Bash)` | None |
 | **Branch Protection** | Prevents direct edits to `main` or `master` branches | `PreToolUse(Edit\|MultiEdit\|Write)` | None |
@@ -45,6 +45,7 @@ Initializes a new turn directory for every user prompt. This is the foundation o
 - Resolves next `TURN_ID` from `turns_index.csv`
 - Creates `./ai/agentic-pipeline/turns/turn-${TURN_ID}/`
 - Writes `session_context.md` with metadata (turn ID, timestamp, branch, prompt preview)
+- Writes `execution_trace.json` with `requestedSkillsFromPrompt`, `skillsExecuted`, and `agentsExecuted`
 - Outputs turn initialization banner
 
 ---

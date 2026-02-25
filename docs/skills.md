@@ -16,8 +16,9 @@ This document catalogs all skills defined under the `.claude/skills/` directory.
 | **spec-task-next** | Get next uncompleted task in current epic | Manual: `/spec-task-next` | None |
 | **session-start** | Load memory bank and initialize session | Manual: `/session-start` | Used by `memory-bank` agent |
 | **session-end** | Complete turn artifacts and update memory | Manual: `/session-end` | Used by `memory-bank` agent |
-| **context-prime** | Load all project context for deep work | Manual: `/context-prime` | None |
-| **memory-init** | Initialize or rebuild memory bank | Manual: `/memory-init` | Used by `memory-bank` agent |
+| **git-status** | Load project context (git state, stack, active epic) | Manual: `/git-status` | None |
+| **session-context-size** | Capture context window usage to logs directory | Manual: `/session-context-size` | None |
+| **makefile-gen** | Generate stack-aware Makefile for dev/test/docker | Manual: `/makefile-gen` or after `/project-init` | None |
 | **verify-all** | Run full quality gate (TS + lint + test + build) | Before every PR, called by `/execute` | Spawns: `nextjs-engineer`, `nestjs-engineer`, `drizzle-dba`, `spring-engineer`, `test-writer`, `code-architect` |
 | **test-and-fix** | Run tests and iteratively fix failures | Manual: `/test-and-fix` | None |
 | **security-scan** | Security audit on changed files | Manual: `/security-scan` | Spawns: `security-auditor` |
@@ -54,6 +55,7 @@ Core skills that drive the agentic-pipeline workflow.
 |-------|------------|---------|
 | `execute` | `/execute prd=... ddd=... stack=...` | Full pipeline from spec to working app |
 | `project-init` | `/project-init <stack>` | Scaffold monorepo structure |
+| `makefile-gen` | `/makefile-gen [stack=...]` | Generate Makefile for dev/test/docker |
 | `ddd-parse` | `/ddd-parse <path>` | Parse DDD to `model.json` |
 | `spec-prd-new` | `/spec-prd-new <name>` | Create new PRD via discovery |
 | `spec-prd-list` | `/spec-prd-list` | List PRDs and epics |
@@ -63,14 +65,14 @@ Core skills that drive the agentic-pipeline workflow.
 
 ### Session Skills
 
-Skills for managing session state and memory.
+Skills for managing session state and context.
 
 | Skill | Invocation | Purpose |
 |-------|------------|---------|
 | `session-start` | `/session-start` | Load context and orient |
 | `session-end` | `/session-end` | Complete turn artifacts |
-| `context-prime` | `/context-prime` | Load all context for deep work |
-| `memory-init` | `/memory-init` | Initialize memory bank |
+| `git-status` | `/git-status` | Load project context for deep work |
+| `session-context-size` | `/session-context-size` | Capture context window usage to logs |
 
 ### Git Skills
 
@@ -299,6 +301,65 @@ General-purpose utility skills.
 **Minimal ADR:** `No architectural decision made this turn — [description].`
 
 **Location:** `./ai/agentic-pipeline/turns/turn-${TURN_ID}/adr.md`
+
+---
+
+### git-status
+
+**File:** `.claude/skills/git-status/SKILL.md`
+**Purpose:** Load project context for focused work sessions.
+
+**Gathers:**
+- Current branch and git status
+- Recent commits (last 10)
+- Active epic (if any in `.claude/epics/`)
+- Stack summary from package.json and CLAUDE.md
+
+**Output:** Formatted context summary showing project, stack, branch, active work, and recent commits.
+
+**Use:** Run at start of focused work session to orient quickly.
+
+---
+
+### makefile-gen
+
+**File:** `.claude/skills/makefile-gen/SKILL.md`
+**Purpose:** Generate a stack-aware Makefile for development, testing, and Docker.
+
+**Detects:**
+- Next.js (`app/web/`)
+- NestJS (`app/api/`)
+- Spring Boot (`app/services/enterprise/`)
+- Drizzle (`app/packages/database/`)
+
+**Generated Targets:**
+| Category | Targets |
+|----------|---------|
+| Setup | `install`, `setup`, `fresh`, `clean` |
+| Dev | `dev`, `dev-web`, `dev-api`, `dev-enterprise` |
+| Docker | `docker-up`, `docker-down`, `docker-logs`, `docker-reset` |
+| Database | `db-generate`, `db-migrate`, `db-studio`, `db-reset` |
+| Quality | `test`, `lint`, `typecheck`, `verify`, `build` |
+
+**Triggers:** After `/project-init` or manual invocation.
+
+---
+
+### session-context-size
+
+**File:** `.claude/skills/session-context-size/SKILL.md`
+**Purpose:** Capture and save context window usage report.
+
+**Output Location:** `./logs/context-<N>.md` (auto-incremented)
+
+**Report Includes:**
+- Loaded rules files and sizes
+- Skills count
+- CLAUDE.md size
+- MCP tools (if any)
+- Custom agents (if visible)
+
+**Use:** Monitor token consumption during long sessions.
 
 ---
 

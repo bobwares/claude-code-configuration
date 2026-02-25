@@ -1,14 +1,9 @@
 ---
-name: context-prime
+name: git-status
 description: Load project context into the current conversation for maximum effectiveness. Run at start of a focused work session.
 disable-model-invocation: false
 ---
-
-# Context Prime
-
-Load all relevant context for this session.
-
-## Project State
+# Project State
 
 ```bash
 git branch --show-current

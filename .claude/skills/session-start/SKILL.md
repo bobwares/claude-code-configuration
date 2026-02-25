@@ -6,25 +6,14 @@ disable-model-invocation: false
 
 # Session Start
 
-## Step 1: Load Context Files
-
-Read all context files (in order):
-- `.claude/context/context_container.md` — base directories and path variables
-- `.claude/context/context_session.md` — turn timing and directory variables
-- `.claude/context/context_conventions.md` — naming, git, formatting conventions
-- `.claude/context/context_governance.md` — mandatory coding standards
-- `.claude/context/context_orchestration.md` — 10-step turn lifecycle
-- `.claude/context/context_adr.md` — ADR policy
-- `.claude/context/context_skills.md` — available skills reference
-
-## Step 2: Load Git State
+## Step 1: Load Git State
 
 Run:
 - `git branch --show-current`
 - `git status --short`
 - `git log --oneline -5`
 
-## Step 3: Resolve Turn State
+## Step 2: Resolve Turn State
 
 Check if the turn index exists:
 ```bash
@@ -38,7 +27,7 @@ else
 fi
 ```
 
-## Step 4: Display Session Status
+## Step 3: Display Session Status
 
 Present a session orientation table:
 
@@ -54,23 +43,9 @@ Present a session orientation table:
 ═══════════════════════════════════════════════════════════
 ```
 
-## Step 5: Confirm Readiness
+## Step 4: Confirm Readiness
 
 End with: "Context loaded. Governance active. Turn {{NEXT_TURN_ID}} ready. What would you like to work on?"
 
 Do not accept any task until this confirmation is displayed.
 
----
-
-## Governance Reminder (always display)
-
-```
-ACTIVE STANDARDS:
-  ✓ Metadata headers required on all source files
-  ✓ Semantic versioning per file (new files start at 0.1.0)
-  ✓ Commits: "AI Coding Agent Change:" + 3-5 bullets
-  ✓ Branches: <type>/<description>[-<task-id>]
-  ✓ ADR required every turn (full or minimal)
-  ✓ Turn tagged: git tag turn/${TURN_ID}
-  ✓ 4 turn artifacts: session_context, pull_request, adr, manifest
-```

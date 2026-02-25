@@ -6,6 +6,7 @@
 | TURN_START_TIME | {{TURN_START_TIME}} |
 | TARGET_PROJECT | {{TARGET_PROJECT}} |
 | CURRENT_TURN_DIRECTORY | {{CURRENT_TURN_DIRECTORY}} |
+| EXECUTION_TRACE_FILE | {{CURRENT_TURN_DIRECTORY}}/execution_trace.json |
 | CODING_AGENT | claude |
 | Active Branch | {{ACTIVE_BRANCH}} |
 | Task Description | {{TASK_DESCRIPTION}} |
@@ -29,6 +30,15 @@
 | governance | Always active |
 | adr | Always active |
 | {{DOMAIN_SKILL}} | Auto-activated by skill-eval hook |
+
+## Turn Execution Tracking
+
+| Field | Value |
+|------|-------|
+| Skills requested in prompt | {{SKILLS_REQUESTED_FROM_PROMPT}} |
+| Skills executed (finalize at session-end) | {{SKILLS_EXECUTED}} |
+| Agents executed (finalize at session-end) | {{AGENTS_EXECUTED}} |
+| Source of truth | `execution_trace.json` |
 
 ## Agent Routing
 

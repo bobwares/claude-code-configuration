@@ -16,11 +16,12 @@ Step 4: Record start time                              Step 9: Write manifest.js
                                                        Step 10: Update turns_index.csv
 ```
 
-Every turn produces **4 artifacts** in `./ai/agentic-pipeline/turns/turn-${TURN_ID}/`:
+Every turn produces **5 artifacts** in `./ai/agentic-pipeline/turns/turn-${TURN_ID}/`:
 
 | Artifact | Purpose |
 |----------|---------|
 | `session_context.md` | Table of all loaded context variables |
+| `execution_trace.json` | Skills and agents executed during the turn |
 | `pull_request.md` | Files changed, tasks executed, compliance checklist |
 | `adr.md` | Architecture Decision Record (full or minimal — mandatory) |
 
@@ -29,16 +30,20 @@ Every turn produces **4 artifacts** in `./ai/agentic-pipeline/turns/turn-${TURN_
 
 **After completing ANY response that modifies files**, you MUST:
 
-1. **Write `pull_request.md`** to the turn directory:
+1. **Update `execution_trace.json`** to the turn directory:
+   - `skillsExecuted` list (actual skills used)
+   - `agentsExecuted` list (actual agents used)
+
+2. **Write `pull_request.md`** to the turn directory:
    - Summary of changes (3-5 bullets)
    - Files modified (table with paths)
    - Compliance checklist
 
-2. **Write `adr.md`** to the turn directory:
+3. **Write `adr.md`** to the turn directory:
    - Full ADR if architectural decisions were made
    - Minimal: `No architectural decision made this turn — [description].`
 
-3. **Update `turns_index.csv`**:
+4. **Update `turns_index.csv`**:
    ```bash
    echo "${TURN_ID},${START_TIME},${END_TIME},${ELAPSED},${BRANCH},${COMMIT_SHA},${SUMMARY}" >> ./ai/agentic-pipeline/turns_index.csv
    ```
@@ -58,4 +63,3 @@ ls -td ./ai/agentic-pipeline/turns/turn-* | head -1
 ```
 
 Or read the most recent `session_context.md` for the TURN_ID.
-

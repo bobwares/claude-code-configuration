@@ -1,6 +1,6 @@
 ---
 name: execute
-description: One-command full app build. Provide PRD path, DDD path, and tech stack file — the pipeline does the rest. Usage: /execute prd=<path> ddd=<path> stack=<path-to-tech-stack.md>
+description: "One-command full app build. Provide PRD path, DDD path, and tech stack file — the pipeline does the rest. Usage: /execute prd=<path> ddd=<path> stack=<path-to-tech-stack.md>"
 ---
 
 # Execute — Full Pipeline Trigger
@@ -16,6 +16,7 @@ The user has supplied everything you need. **Do not ask any clarifying questions
 Parse the invocation arguments. Accepted formats:
 
 ```
+/execute {{pulls prd.md, ddd.md, and tech-stack.md from specs directory.}}
 /execute prd=specs/my-app.prd.md ddd=specs/my-app.ddd.md stack=specs/tech-stack.md
 /execute prd=my-app ddd=my-app stack=my-app
 /execute specs/prd.md specs/ddd.md specs/tech-stack.md
@@ -149,16 +150,16 @@ Wait for `project-init` to complete before proceeding.
 
 ## Step 4: Parse DDD into Domain Model
 
-Invoke the `ddd-parse` skill with the DDD document path.
+Invoke the `spec-parse-ddd` skill with the DDD document path.
 
-This skill reads the DDD document and outputs a structured domain model at `.claude/domain/model.json` containing:
+This skill reads the DDD document and outputs a structured domain model at `@specs/domain/model.json` containing:
 - Bounded contexts with their aggregates
 - Entities and their fields
 - Value objects
 - Domain events
 - Relationships between aggregates
 
-Wait for `ddd-parse` to complete before proceeding.
+Wait for `spec-parse-ddd` to complete before proceeding.
 
 ---
 
@@ -172,7 +173,7 @@ Invoke the `spec-prd-parse` skill with the PRD name AND the domain model.
 - Ensure API tasks align with domain service boundaries
 - Generate frontend tasks that reflect the domain language
 
-This produces `.claude/epics/<app-name>/epic.md` with a full, DDD-aware task breakdown.
+This produces `specs/epics/<app-name>/epic.md` with a full, DDD-aware task breakdown.
 
 Wait for `spec-prd-parse` to complete before proceeding.
 

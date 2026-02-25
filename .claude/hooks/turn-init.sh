@@ -33,6 +33,32 @@ BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
 # Truncate prompt for preview (first 500 chars, escape for markdown)
 PROMPT_PREVIEW=$(echo "$CLAUDE_USER_PROMPT" | head -c 500 | tr '\n' ' ' | sed 's/|/\\|/g' | sed 's/`/\\`/g')
 
+# Detect explicitly requested skills from slash commands, e.g. /session-start
+REQUESTED_SKILLS=$(echo "$CLAUDE_USER_PROMPT" | tr ' ' '\n' | grep -oE '^/[a-z0-9-]+' | sed 's#^/##' | sort -u || true)
+if [ -n "$REQUESTED_SKILLS" ]; then
+  REQUESTED_SKILLS_LIST=$(echo "$REQUESTED_SKILLS" | tr '\n' ',' | sed 's/,$//')
+  if command -v jq >/dev/null 2>&1; then
+    REQUESTED_SKILLS_JSON=$(printf '%s\n' "$REQUESTED_SKILLS" | jq -R . | jq -s .)
+  else
+    REQUESTED_SKILLS_JSON=$(printf '%s\n' "$REQUESTED_SKILLS" | awk 'BEGIN { printf "[" } { if (NR>1) printf ","; printf "\"%s\"", $0 } END { printf "]" }')
+  fi
+else
+  REQUESTED_SKILLS_LIST="none"
+  REQUESTED_SKILLS_JSON="[]"
+fi
+
+# Initialize execution trace for this turn. session-end must finalize executed skills/agents.
+cat > "$TURN_DIR/execution_trace.json" << EOF
+{
+  "turnId": ${TURN_ID},
+  "startedAt": "${TURN_START}",
+  "requestedSkillsFromPrompt": ${REQUESTED_SKILLS_JSON},
+  "skillsExecuted": [],
+  "agentsExecuted": [],
+  "notes": "Finalize skillsExecuted and agentsExecuted during session-end."
+}
+EOF
+
 # Write session_context.md
 cat > "$TURN_DIR/session_context.md" << EOF
 # Session Context — Turn ${TURN_ID}
@@ -43,6 +69,8 @@ cat > "$TURN_DIR/session_context.md" << EOF
 | TURN_START_TIME | ${TURN_START} |
 | TARGET_PROJECT | ${PROJECT_ROOT} |
 | CURRENT_TURN_DIRECTORY | ${TURN_DIR} |
+| EXECUTION_TRACE_FILE | ${TURN_DIR}/execution_trace.json |
+| SKILLS_REQUESTED_FROM_PROMPT | ${REQUESTED_SKILLS_LIST} |
 | Branch | ${BRANCH} |
 
 ## User Prompt
@@ -57,6 +85,7 @@ ${PROMPT_PREVIEW}
 
 - [ ] pull_request.md written
 - [ ] adr.md written (full or minimal)
+- [ ] execution_trace.json updated with skills/agents executed
 - [ ] manifest.json written with SHA-256 hashes
 - [ ] turns_index.csv updated
 - [ ] git tag turn/${TURN_ID} created (if committed)
@@ -72,6 +101,6 @@ echo "║  Started: ${TURN_START}                "
 echo "║  Branch: ${BRANCH}                     "
 echo "╚════════════════════════════════════════╝"
 echo ""
-echo "Post-execution: write pull_request.md, adr.md, manifest.json to ${TURN_DIR}/"
+echo "Post-execution: update execution_trace.json and write pull_request.md, adr.md, manifest.json to ${TURN_DIR}/"
 
 exit 0

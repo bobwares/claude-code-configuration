@@ -34,6 +34,17 @@
 
 ---
 
+## Execution Trace
+
+**Trace File**: `./ai/agentic-pipeline/turns/turn-{{TURN_ID}}/execution_trace.json`
+
+| Category | Values |
+|----------|--------|
+| Skills Executed | {{SKILLS_EXECUTED_LIST}} |
+| Agents Executed | {{AGENTS_EXECUTED_LIST}} |
+
+---
+
 ## Files Added (under `./ai/`)
 
 | File |

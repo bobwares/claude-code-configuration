@@ -3,12 +3,35 @@
   "title": "Turn Manifest",
   "description": "Provenance record for one agentic-pipeline turn",
   "type": "object",
-  "required": ["turnId", "tasks", "provenance", "outputs"],
+  "required": ["turnId", "execution", "tasks", "provenance", "outputs"],
   "properties": {
     "turnId": {
       "type": "integer",
       "minimum": 1,
       "description": "Monotonically increasing turn identifier"
+    },
+    "execution": {
+      "type": "object",
+      "description": "Turn-level execution summary for skill and agent tracking",
+      "required": ["tracePath", "skillsExecuted", "agentsExecuted"],
+      "properties": {
+        "tracePath": {
+          "type": "string",
+          "description": "Path to execution_trace.json for this turn"
+        },
+        "skillsExecuted": {
+          "type": "array",
+          "description": "All skills that were actually executed this turn",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        },
+        "agentsExecuted": {
+          "type": "array",
+          "description": "All agents that were actually executed this turn",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
+      }
     },
     "tasks": {
       "type": "array",
@@ -38,7 +61,7 @@
               "security-auditor",
               "doc-generator",
               "git-guardian",
-              "memory-bank"
+              "claude"
             ]
           },
           "inputs": {
