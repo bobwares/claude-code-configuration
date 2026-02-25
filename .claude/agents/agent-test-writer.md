@@ -177,14 +177,14 @@ void shouldReturnUserReactively() {
 ## Work Process
 
 ### TypeScript
-1. Invoke `testing-patterns` skill
+1. Invoke `pattern-testing` skill
 2. Read the source file being tested
 3. Read existing test files for patterns
 4. Write tests (failing first in TDD, or for existing code)
 5. Run `pnpm test --run` and confirm results
 
 ### Java
-1. Invoke `testing-patterns` skill (Java section)
+1. Invoke `pattern-testing` skill (Java section)
 2. Read the source file being tested
 3. Create test file in `src/test/java/...` mirroring source structure
 4. Write tests with `@Nested` classes for method grouping

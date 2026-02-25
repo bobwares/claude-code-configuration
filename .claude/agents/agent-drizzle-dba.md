@@ -29,7 +29,7 @@ You are a database expert specializing in Drizzle ORM with PostgreSQL.
 
 ## Work Process
 
-1. Invoke `drizzle-patterns` skill
+1. Invoke `pattern-drizzle` skill
 2. Read `packages/database/schema/` for existing patterns
 3. Design schema changes
 4. Run `pnpm db:generate` to generate migration

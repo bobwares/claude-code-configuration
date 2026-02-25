@@ -32,7 +32,7 @@ app/web/src/app/[route]/
 
 ## Work Process
 
-1. Read the relevant skill: invoke `nextjs-patterns` skill
+1. Read the relevant skill: invoke `pattern-nextjs` skill
 2. Read existing similar pages in the codebase for patterns
 3. Implement page/component/action
 4. Write co-located unit test

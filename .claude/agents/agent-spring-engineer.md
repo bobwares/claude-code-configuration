@@ -56,10 +56,10 @@ You are a Java Spring WebFlux expert specializing in fully reactive, non-blockin
 
 ## Work Process
 
-1. Invoke `spring-patterns` skill for reference
+1. Invoke `pattern-spring` skill for reference
 2. Read existing entities/services for patterns
 3. Implement: entity → repository → service → controller (all reactive)
-4. **Create unit tests for the service** (use `testing-patterns` skill)
+4. **Create unit tests for the service** (use `pattern-testing` skill)
 5. **Create integration tests for the controller**
 6. Run `mvn compile` to verify
 7. Run `mvn test` — verify ALL tests pass

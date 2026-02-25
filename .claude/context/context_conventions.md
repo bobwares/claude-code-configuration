@@ -21,7 +21,7 @@ Single source of truth for all naming conventions, file layout, variable syntax,
 |-----------|---------|---------|
 | Context files | `context_<name>.md` (lowercase, underscores) | `context_governance.md` |
 | Skill packages | `<name>/SKILL.md` (lowercase, hyphens) | `governance/SKILL.md` |
-| Agent files | `<name>.md` (lowercase, hyphens) | `nextjs-engineer.md` |
+| Agent files | `agent-<name>.md` (lowercase, hyphens) | `agent-nextjs-engineer.md` |
 | Template files | `<name>_template.md` or `<name>.md` | `adr_template.md` |
 | Turn artifacts | `session_context.md`, `pull_request.md`, `adr.md`, `manifest.json` | fixed names |
 | Turn directories | `turn-${TURN_ID}` | `turn-42` |

@@ -29,7 +29,7 @@ For every new feature module:
 
 ## Work Process
 
-1. Invoke `nestjs-patterns` skill
+1. Invoke `pattern-nestjs` skill
 2. Read existing modules (e.g., `app/api/src/modules/`) for patterns
 3. Generate the full module structure
 4. Register in `app.module.ts`
