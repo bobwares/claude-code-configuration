@@ -1,0 +1,27 @@
+{
+  "turnId": 3,
+  "tasks": [
+    {
+      "name": "Change docs/ to specs/ in execute skill",
+      "agent": "claude-opus-4-5",
+      "inputs": [".claude/skills/execute/SKILL.md"],
+      "outputs": [
+        {
+          "path": ".claude/skills/execute/SKILL.md",
+          "sha256": "e58ca2193e7c17311f911a00be73114501277e99537c81bddb67fa2e0d7b158c"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "startedAt": "2026-02-24T21:19:26Z",
+    "finishedAt": "2026-02-24T21:20:00Z",
+    "tools": ["Edit"]
+  },
+  "outputs": [
+    {
+      "path": ".claude/skills/execute/SKILL.md",
+      "sha256": "e58ca2193e7c17311f911a00be73114501277e99537c81bddb67fa2e0d7b158c"
+    }
+  ]
+}

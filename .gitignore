@@ -37,6 +37,4 @@ Thumbs.db
 .env
 .env.*
 
-# Claude turn artifacts
-ai/agentic-pipeline/turns/
-.claude/audit/
+

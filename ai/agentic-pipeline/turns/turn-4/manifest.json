@@ -1,0 +1,42 @@
+{
+  "turnId": 4,
+  "tasks": [
+    {
+      "name": "Create docs/agents.md with agent reference table",
+      "agent": "claude-opus-4-5",
+      "inputs": [
+        ".claude/agents/agent-orchestrator.md",
+        ".claude/agents/agent-code-architect.md",
+        ".claude/agents/agent-nextjs-engineer.md",
+        ".claude/agents/agent-nestjs-engineer.md",
+        ".claude/agents/agent-spring-engineer.md",
+        ".claude/agents/agent-drizzle-dba.md",
+        ".claude/agents/agent-ai-engineer.md",
+        ".claude/agents/agent-test-writer.md",
+        ".claude/agents/agent-code-reviewer.md",
+        ".claude/agents/agent-security-auditor.md",
+        ".claude/agents/agent-verify-app.md",
+        ".claude/agents/agent-git-guardian.md",
+        ".claude/agents/agent-doc-generator.md",
+        ".claude/agents/agent-memory-bank.md"
+      ],
+      "outputs": [
+        {
+          "path": "docs/agents.md",
+          "sha256": "946a241a4f4dad22cfafb9b36c3ef2374c6f3bc6585e72c8423c7f47727087d8"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "startedAt": "2026-02-24T21:50:29Z",
+    "finishedAt": "2026-02-24T21:52:00Z",
+    "tools": ["Glob", "Read", "Write", "Bash"]
+  },
+  "outputs": [
+    {
+      "path": "docs/agents.md",
+      "sha256": "946a241a4f4dad22cfafb9b36c3ef2374c6f3bc6585e72c8423c7f47727087d8"
+    }
+  ]
+}

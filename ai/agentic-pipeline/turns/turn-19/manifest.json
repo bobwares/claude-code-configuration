@@ -1,0 +1,62 @@
+{
+  "turnId": 19,
+  "execution": {
+    "tracePath": "ai/agentic-pipeline/turns/turn-19/execution_trace.json",
+    "skillsExecuted": ["adr", "governance"],
+    "agentsExecuted": ["claude"]
+  },
+  "tasks": [
+    {
+      "taskId": "T19-1",
+      "agent": "claude",
+      "inputs": [
+        ".claude/hooks/turn-init.sh",
+        ".claude/skills/session-end/SKILL.md",
+        ".claude/templates/contexts/session_context.md",
+        ".claude/templates/pr/pull_request_template.md",
+        ".claude/templates/turn/manifest.schema.json",
+        "CLAUDE.md",
+        "docs/hooks.md"
+      ],
+      "outputs": [
+        {"path": ".claude/hooks/turn-init.sh", "sha256": "1b360d28c94ad84ac43de2c1ef478e087455c989769d19090f71503c5d3feaac"},
+        {"path": ".claude/skills/session-end/SKILL.md", "sha256": "467b0f12dcf822ee1513e10024818da70a913e8a870100bab605ccfb661c2516"},
+        {"path": ".claude/templates/contexts/session_context.md", "sha256": "14d805e0a01b39c95929f5eecce80194dd8213473388f4ec4db2e67bb0abe892"},
+        {"path": ".claude/templates/pr/pull_request_template.md", "sha256": "6964ba0bbf594bb9dacd1ae1004ed0fae122b374e8ec20dcfeaffb121cbff8e1"},
+        {"path": ".claude/templates/turn/manifest.schema.json", "sha256": "780b20c830f017ac26a085feec57da961b048b70f5acfa07de405439f7f3d5f3"},
+        {"path": "CLAUDE.md", "sha256": "e1b45924c706b3665e5f88db7d533917734fbe939b8139e72ac974dca1fe2fc9"},
+        {"path": "docs/hooks.md", "sha256": "ee78b71b54581dd24c425e67465912303382a1af5c772ee81072aa6f9575720f"}
+      ],
+      "validations": [
+        {"rule": "tests-pass", "status": "skipped", "detailsPath": ""},
+        {"rule": "lint-clean", "status": "skipped", "detailsPath": ""},
+        {"rule": "typecheck", "status": "skipped", "detailsPath": ""}
+      ]
+    }
+  ],
+  "provenance": {
+    "promptHash": "3d1fe8e314cdc94ceb7789c6d3b1e3428df9ef94062dd4dc8b1756f6f586c0eb",
+    "tools": ["Edit", "Write", "Bash"],
+    "startedAt": "2026-02-25T21:44:15Z",
+    "finishedAt": "2026-02-25T21:53:31Z",
+    "activePatternName": "",
+    "activePatternPath": ""
+  },
+  "outputs": [
+    {"path": ".claude/hooks/turn-init.sh", "sha256": "1b360d28c94ad84ac43de2c1ef478e087455c989769d19090f71503c5d3feaac"},
+    {"path": ".claude/skills/session-end/SKILL.md", "sha256": "467b0f12dcf822ee1513e10024818da70a913e8a870100bab605ccfb661c2516"},
+    {"path": ".claude/templates/contexts/session_context.md", "sha256": "14d805e0a01b39c95929f5eecce80194dd8213473388f4ec4db2e67bb0abe892"},
+    {"path": ".claude/templates/pr/pull_request_template.md", "sha256": "6964ba0bbf594bb9dacd1ae1004ed0fae122b374e8ec20dcfeaffb121cbff8e1"},
+    {"path": ".claude/templates/turn/manifest.schema.json", "sha256": "780b20c830f017ac26a085feec57da961b048b70f5acfa07de405439f7f3d5f3"},
+    {"path": "CLAUDE.md", "sha256": "e1b45924c706b3665e5f88db7d533917734fbe939b8139e72ac974dca1fe2fc9"},
+    {"path": "docs/hooks.md", "sha256": "ee78b71b54581dd24c425e67465912303382a1af5c772ee81072aa6f9575720f"},
+    {"path": "ai/agentic-pipeline/turns/turn-19/session_context.md", "sha256": "137bc93790bcd6e2a0885f201c162c50316f8ddaa1698253bc18f6a7f1230c38"},
+    {"path": "ai/agentic-pipeline/turns/turn-19/execution_trace.json", "sha256": "7dfa3a63c93526cf4cc3ec0767cf9d357906967f9ddd7fde0743405a90a22e22"},
+    {"path": "ai/agentic-pipeline/turns/turn-19/pull_request.md", "sha256": "1e2f0685b967c6ec59eb6a361b51b9c0d94a5e52103ef4ebe6cdc56bf5325286"},
+    {"path": "ai/agentic-pipeline/turns/turn-19/adr.md", "sha256": "7a4e44188b5f717f8a4c052601e8d8bb419354eb4e15c04022879128dfdba1c0"}
+  ],
+  "summary": "Added turn-level execution tracking for skills and agents via execution_trace.json and updated templates/schemas/docs.",
+  "branch": "feature/execute-turn-branch",
+  "commit": "129d7ca",
+  "elapsedSeconds": 556
+}

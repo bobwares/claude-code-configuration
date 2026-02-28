@@ -1,0 +1,51 @@
+{
+  "turn_id": 11,
+  "started_at": "2026-02-25T00:09:24Z",
+  "finished_at": "2026-02-25T00:18:00Z",
+  "branch": "feature/execute-turn-branch",
+  "tools_used": ["Bash", "Read", "Write", "Edit", "Glob", "Grep"],
+  "files": {
+    "Makefile": {
+      "action": "modified",
+      "sha256": "d04fc7bf14acec73a37d0924464179857b42d0e2ac3e8dc371488e8815295ee6"
+    },
+    ".claude/skills/project-init/SKILL.md": {
+      "action": "modified",
+      "sha256": "47d090742c17e83c0213b86b627a377e4f6539ea212852d964845f5ebc396f50"
+    },
+    ".claude/skills/makefile-gen/SKILL.md": {
+      "action": "modified",
+      "sha256": "e6d6ba2b4d00e26f6cd3afd4b1123849e5c928a196a29d0071daa7e5b71bfd85"
+    },
+    "CLAUDE.md": {
+      "action": "modified",
+      "sha256": "e5239a62c91327f02661e6f74e4e0cddc69dca3f4141dee68a1015a802200c2a"
+    },
+    ".claude/hooks/skill-rules.json": {
+      "action": "modified",
+      "sha256": "c9cbf533de5688e36ad3fd58987f908b1ad8cfe987ef049d1bddce511649672b"
+    },
+    "app/pnpm-workspace.yaml": {
+      "action": "modified"
+    }
+  },
+  "notes": "Restructured monorepo: apps/ → app/, moved config files into app/, updated 20+ skill/agent/context files",
+  "directories_moved": {
+    "apps/api": "app/api",
+    "apps/web": "app/web",
+    "packages/database": "app/packages/database",
+    "packages/types": "app/packages/types"
+  },
+  "config_files_moved": [
+    "package.json → app/package.json",
+    "pnpm-workspace.yaml → app/pnpm-workspace.yaml",
+    "turbo.json → app/turbo.json",
+    "tsconfig.base.json → app/tsconfig.base.json",
+    "docker-compose.yml → app/docker-compose.yml"
+  ],
+  "artifacts": {
+    "pull_request.md": "turn-11/pull_request.md",
+    "adr.md": "turn-11/adr.md",
+    "manifest.json": "turn-11/manifest.json"
+  }
+}
